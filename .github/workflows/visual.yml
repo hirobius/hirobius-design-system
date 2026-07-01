@@ -8,6 +8,11 @@ concurrency:
   group: visual-${{ github.ref }}
   cancel-in-progress: true
 
+# Re-baseline path (add the `update-snapshots` label to the PR) commits the
+# regenerated PNGs back to the PR branch, so it needs write access.
+permissions:
+  contents: write
+
 jobs:
   visual:
     name: Visual regression tests
@@ -20,6 +25,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Check out the PR head branch (not the detached merge ref) so the
+          # re-baseline path can commit updated snapshots straight back to it.
+          ref: ${{ github.head_ref }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -42,6 +50,19 @@ jobs:
       - name: Visual tests (update snapshots)
         if: contains(github.event.pull_request.labels.*.name, 'update-snapshots')
         run: pnpm test:visual:update
+
+      - name: Commit regenerated baselines
+        if: contains(github.event.pull_request.labels.*.name, 'update-snapshots')
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/visual.spec.ts-snapshots
+          if git diff --cached --quiet; then
+            echo "No baseline changes to commit."
+          else
+            git commit -m "chore: regen visual baselines [skip ci]"
+            git push origin HEAD:${{ github.head_ref }}
+          fi
 
       - name: Visual tests
         if: "!contains(github.event.pull_request.labels.*.name, 'update-snapshots')"
