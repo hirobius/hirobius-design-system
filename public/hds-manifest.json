@@ -5682,6 +5682,7 @@
         "src/app/components/lab/legacy-token-detail.tsx",
         "src/app/data/hdsEditorial.tsx",
         "src/app/design-system/generated-token-descriptions.ts",
+        "src/mui/index.ts",
         "src/stories/badge.stories.tsx",
         "src/stories/code-block.stories.tsx",
         "src/stories/combobox.stories.tsx",
