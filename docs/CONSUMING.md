@@ -204,6 +204,35 @@ export function Example() {
 | `@hirobius/design-system/contexts`      | React context providers, incl. the router seam (see below)                                      |
 | `@hirobius/design-system/form`          | Optional React Hook Form + Zod form adapter (see §8.5)                                          |
 
+### Semantic feedback / status tokens
+
+For status UI (Saved / Applied / Interviewing / Offer / Rejected, or any
+success/warning/error/in-progress state), theme from HDS's feedback tokens
+instead of hardcoding hex. Each is a CSS custom property that auto-switches
+light/dark and is AA-verified for small text on both the page and card
+(`raised`) surfaces (asserted by `scripts/check-contrast.mjs`):
+
+| Intent      | Text color var                         | Tinted-surface var                        |
+| ----------- | -------------------------------------- | ----------------------------------------- |
+| success     | `--semantic-color-feedback-success`    | `--semantic-color-feedback-bg-success`    |
+| warning     | `--semantic-color-feedback-warning`    | `--semantic-color-feedback-bg-warning`    |
+| info        | `--semantic-color-feedback-info`       | `--semantic-color-feedback-bg-info`       |
+| error       | `--semantic-color-feedback-error`      | `--semantic-color-feedback-bg-error`      |
+| in-progress | `--semantic-color-feedback-inProgress` | `--semantic-color-feedback-bg-inProgress` |
+
+```css
+.status-offer {
+  color: var(--semantic-color-feedback-success);
+}
+.status-pending {
+  color: var(--semantic-color-feedback-inProgress);
+}
+```
+
+The same values are available as typed TS via `@hirobius/design-system/tokens`
+(`hds.color.feedback.*`), and the `Button`/`Tag`/`Badge` components expose them
+directly through a `tone` prop (§7) so you rarely need the raw vars.
+
 ## 8. Optional providers — theming / i18n / multi-tenant / fonts
 
 Only needed if you use those features. Mount them above your app:

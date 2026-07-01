@@ -190,12 +190,14 @@
   --hds-feedback-danger: var(--semantic-color-feedback-error);
   --hds-feedback-warning: var(--semantic-color-feedback-warning);
   --hds-feedback-info: var(--semantic-color-feedback-info);
+  --hds-feedback-inProgress: var(--semantic-color-feedback-inProgress);
   --hds-feedback-neutral: var(--semantic-color-content-secondary);
 
   --hds-feedback-success-bg: var(--semantic-color-feedback-bg-success);
   --hds-feedback-danger-bg: var(--semantic-color-feedback-bg-error);
   --hds-feedback-warning-bg: var(--semantic-color-feedback-bg-warning);
   --hds-feedback-info-bg: var(--semantic-color-feedback-bg-info);
+  --hds-feedback-inProgress-bg: var(--semantic-color-feedback-bg-inProgress);
 
   /* -- Shadow vars — no token backing. Legacy aliases only; do not use in new components. -- */
   --hds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
