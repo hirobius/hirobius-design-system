@@ -63,7 +63,9 @@ jobs:
           if git diff --cached --quiet; then
             echo "No baseline changes to commit."
           else
-            git commit -m "chore: regen visual baselines [skip ci]"
+            # --no-verify: this is a generated-PNG commit; the husky pre-commit
+            # code gates are irrelevant to it and shouldn't run in CI.
+            git commit --no-verify -m "chore: regen visual baselines [skip ci]"
             git push origin HEAD:${{ github.head_ref }}
           fi
 
