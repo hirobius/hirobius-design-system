@@ -53,6 +53,11 @@
       "import": "./dist/form.js",
       "default": "./dist/form.js"
     },
+    "./mui": {
+      "types": "./dist/types/src/mui/index.d.ts",
+      "import": "./dist/mui.js",
+      "default": "./dist/mui.js"
+    },
     "./protocol": {
       "import": "./protocol/envelope.mjs",
       "default": "./protocol/envelope.mjs"

@@ -160,6 +160,21 @@ If your app runs MUI `<CssBaseline>` + Emotion (or any opinionated global CSS),
   design-token custom properties — no components, no utilities, no reset. Use
   when you only want to theme another system (MUI palette, etc.) from HDS tokens
   and aren't rendering HDS components on that surface.
+- **MUI theme preset:** `@hirobius/design-system/mui` maps HDS tokens to an MUI
+  palette so MUI and HDS share one source of truth (status colors line up with
+  `<Button tone>`). It imports no MUI code — the return type is structural:
+
+  ```tsx
+  import { createTheme, ThemeProvider } from '@mui/material';
+  import { hdsMuiThemeOptions } from '@hirobius/design-system/mui';
+
+  const theme = createTheme({ cssVariables: true, ...hdsMuiThemeOptions() });
+  // render inside a `data-hds` scope (+ variables.css/styles.css) so the vars resolve
+  ```
+
+  Palette values are HDS token `var(--…)` references, so light/dark follow
+  `[data-theme]` automatically. Requires MUI v6+ (`cssVariables: true`).
+
 - **Leaf imports stay light:** importing a primitive (e.g. `Button`) does **not**
   pull `react-router`, `react-hook-form`, `zod`, or `@hookform/resolvers` into
   your bundle — those are optional peers used only by the router seam / the
@@ -203,6 +218,7 @@ export function Example() {
 | `@hirobius/design-system/manifest`      | Machine-readable component inventory (`hds-manifest.json`)                                      |
 | `@hirobius/design-system/contexts`      | React context providers, incl. the router seam (see below)                                      |
 | `@hirobius/design-system/form`          | Optional React Hook Form + Zod form adapter (see §8.5)                                          |
+| `@hirobius/design-system/mui`           | Optional Material UI theme preset — maps HDS tokens to an MUI palette (see §6)                  |
 
 ### Semantic feedback / status tokens
 

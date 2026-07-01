@@ -131,7 +131,7 @@ const failures = [];
 
 // Subpaths that must RESOLVE against the exports map (incl. the CSS asset,
 // which Node cannot import but must still resolve to a real file).
-const resolvable = ['.', './tokens', './tokens.css', './styles.css', './variables.css', './cn', './manifest', './contexts', './protocol']
+const resolvable = ['.', './tokens', './tokens.css', './styles.css', './variables.css', './cn', './manifest', './contexts', './mui', './protocol']
   .map((s) => (s === '.' ? PKG : PKG + s.slice(1)));
 
 for (const spec of resolvable) {
@@ -154,6 +154,11 @@ const importChecks = [
   [PKG + '/tokens', (m) => assert.ok(m.default && typeof m.default === 'object', 'tokens default missing')],
   [PKG + '/manifest', (m) => assert.ok(m.default && typeof m.default === 'object', 'manifest default missing')],
   [PKG + '/contexts', (m) => assert.equal(typeof m.ThemeProvider, 'function', 'ThemeProvider missing')],
+  [PKG + '/mui', (m) => {
+    assert.equal(typeof m.hdsMuiThemeOptions, 'function', 'hdsMuiThemeOptions missing');
+    const opts = m.hdsMuiThemeOptions();
+    assert.ok(opts.palette && opts.palette.error && String(opts.palette.error.main).startsWith('var(--'), 'mui palette not token-wired');
+  }],
   [PKG + '/protocol', (m) => {
     assert.equal(typeof m.createEnvelope, 'function', 'createEnvelope missing');
     assert.equal(typeof m.verifyEnvelope, 'function', 'verifyEnvelope missing');
