@@ -2833,6 +2833,7 @@
       },
       "consumers": [
         "src/app/components/componentPreviewRegistry.tsx",
+        "src/app/lib/nav-active.ts",
         "src/stories/nav-group.stories.tsx"
       ],
       "tokenMapping": {},
