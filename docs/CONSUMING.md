@@ -230,8 +230,13 @@ light/dark and is AA-verified for small text on both the page and card
 ```
 
 The same values are available as typed TS via `@hirobius/design-system/tokens`
-(`hds.color.feedback.*`), and the `Button`/`Tag`/`Badge` components expose them
-directly through a `tone` prop (§7) so you rarely need the raw vars.
+(`hds.color.feedback.*`), and the `Button` and `Badge` components expose them
+directly through a `tone` prop so you rarely need the raw vars:
+
+```tsx
+<Button tone="danger">Delete</Button>        {/* AA in light + dark */}
+<Badge tone="inProgress">Interviewing</Badge>
+```
 
 ## 8. Optional providers — theming / i18n / multi-tenant / fonts
 
